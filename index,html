@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy Unblocker</title>
+<script>
+function unblock() {
+  const urlInput = document.getElementById('urlInput').value;
+  let proxyUrl;
+
+  if (isValidUrl(urlInput)) {
+    proxyUrl = `https://cors-anywhere.herokuapp.com/${urlInput}`;
+  } else {
+    proxyUrl = `https://www.google.com/search?q=${urlInput}`;
+  }
+  
+  fetch(proxyUrl)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('output').innerHTML = data;
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function isValidUrl(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+</script>
+</head>
+<body>
+<h1>Web Proxy Unblocker</h1>
+<label for="urlInput">Enter URL or phrase to unblock:</label>
+<input type="text" id="urlInput">
+<button onclick="unblock()">Unblock</button>
+<div id="output"></div>
+</body>
+</html>
